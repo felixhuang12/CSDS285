@@ -19,6 +19,7 @@
 </head>
 <body>
     <h2>Search Pokemon by Type</h2>
+    <p>Types: Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dark, Dragon, Steel, Fairy</p>
     <form method="post">
         <label for="primary_type">Enter a Pokemon primary type:</label><br>
         <input type="text" id="primary_type" name="primary_type"><br><br>
