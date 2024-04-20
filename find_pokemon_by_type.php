@@ -58,8 +58,9 @@
                 echo "</tr>";
             }
             echo "</table>";
-        } else {
-            echo "<p>No Pokemon found for the specified types.</p>";
+        } elseif (!empty($primary_type)) {
+            $error_msg = !empty($secondary_type) ? "for types '$primary_type' and '$secondary_type'" : "for type '$primary_type'";
+            echo "<p>No Pokemon found $error_msg.</p>";
         }
     }
     ?>
