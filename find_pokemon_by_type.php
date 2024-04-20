@@ -20,16 +20,29 @@
 <body>
     <h2>Search Pokemon by Type</h2>
     <form method="post">
-        <label for="type">Enter a Pokemon type (e.g. fire, water, grass, etc.):</label><br>
-        <input type="text" id="type" name="type"><br><br>
+        <label for="primary_type">Enter a Pokemon primary type:</label><br>
+        <input type="text" id="primary_type" name="primary_type"><br><br>
+        
+        <label for="secondary_type">Enter a Pokemon secondary type (optional):</label><br>
+        <input type="text" id="secondary_type" name="secondary_type"><br><br>
+        
         <input type="submit" value="Search">
     </form>
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $type = $_POST["type"];
-        $cmd = "awk -F, 'tolower(\$3) == tolower(\"$type\") || tolower(\$4) == tolower(\"$type\") { print }' ./datasets/pokemon.csv";
-        exec($cmd, $output);
+        $primary_type = $_POST["primary_type"];
+        $secondary_type = $_POST["secondary_type"];
+        $cmd = "awk -F, 'tolower(\$3) == tolower(\"$primary_type\") && tolower(\$4) == tolower(\"$secondary_type\") || tolower(\$3) == tolower(\"$secondary_type\") && tolower(\$4) == tolower(\"$primary_type\") { print }' ./datasets/pokemon.csv";
+        
+        if (!empty($primary_type) && !empty($secondary_type)) {
+            exec($cmd, $output);
+        } elseif (!empty($primary_type)) {
+            $cmd = "awk -F, 'tolower(\$3) == tolower(\"$primary_type\") || tolower(\$4) == tolower(\"$primary_type\") { print }' ./datasets/pokemon.csv";
+            exec($cmd, $output);
+        } else {
+            echo "<p>Please enter at least one type.</p>";
+        }
 
         if (!empty($output)) {
             echo "<h3>Search Results:</h3>";
@@ -45,7 +58,7 @@
             }
             echo "</table>";
         } else {
-            echo "<p>No Pokemon found for type '$type'.</p>";
+            echo "<p>No Pokemon found for the specified types.</p>";
         }
     }
     ?>
