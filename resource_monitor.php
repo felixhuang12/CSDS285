@@ -30,7 +30,7 @@
         }
 
         if (count($data) < $NUM_DATA_POINTS) {
-            $data = array_pad($data, -$NUM_DATA_POINTS, -1);
+            $data = array_pad($data, -$NUM_DATA_POINTS, -0.01);
         }
 
         return array_slice($data, count($data) - $NUM_DATA_POINTS);
@@ -51,10 +51,10 @@
 
         // Get CPU data from PHP variables
         const cpuIdleData = <?php echo json_encode($cpu_idle_data); ?>;
-        // var cpuUserData = <?php echo json_encode($cpu_user_data); ?>;
-        // Similarly get data for other metrics
-        console.log(cpuIdleData)
-        // console.log(cpuUserData)
+        const cpuUserData = <?php echo json_encode($cpu_user_data); ?>;
+        const cpuSysData = <?php echo json_encode($cpu_system_data); ?>;
+        const cpuWaitData = <?php echo json_encode($cpu_wait_data); ?>;
+        const loadAvgData = <?php echo json_encode($load_avg_five_mins_data); ?>;
 
         function generateDatesAndTimestamps() {
             var datesAndTimestamps = [];
@@ -83,8 +83,8 @@
                     {
                         label: title,
                         data: data,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+                        backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderWidth: 1
                     },
                 ]
@@ -125,6 +125,10 @@
         }
 
         const cpuIdleChart = generateChart('CPU Idle', cpuIdleData, 'cpuIdleChart');
+        const cpuUserChart = generateChart('CPU User', cpuUserData, 'cpuUserChart');
+        const cpuSysChart = generateChart('CPU System', cpuSysData, 'cpuSysChart');
+        const cpuWaitChart = generateChart('CPU Wait', cpuWaitData, 'cpuWaitChart');
+        const loadAvgChart = generateChart('Load Average (5 mins)', loadAvgData, 'loadAvgChart');
     </script>
 </body>
 </html>
