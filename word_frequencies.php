@@ -12,6 +12,7 @@
         <textarea name="text" id="text" rows="10" cols="50"></textarea><br>
         <input type="submit" name="submit" value="Analyze">
     </form>
+    <p>Submit blank text if you would like to see the frequency of words and punctuation in <a href="https://www.gutenberg.org/cache/epub/84/pg84.txt">Frankenstein</a></p>
 
     <?php
         if(isset($_POST['submit'])) {
@@ -27,7 +28,8 @@
                 echo "<pre>$output</pre>";
                 unlink($temp_file);
             } else {
-                echo "<p>No text entered.</p>";
+                $output = shell_exec("bash word_frequencies.sh ./datasets/frankenstein.txt");;
+                echo "<pre>$output</pre>";
             }
         }
     ?>
