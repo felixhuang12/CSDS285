@@ -2,6 +2,16 @@
 <html>
 <head>
     <title>UUID Generator</title>
+    <script>
+        function copyText(id) {
+            var r = document.createRange();
+            r.selectNode(document.getElementById(id));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(r);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+    </script>
 </head>
 <body>
     <h2>UUID Generator</h2>
@@ -23,16 +33,17 @@
                 $output[$i] = shell_exec($cmd);
             }
         } else {
-            $output[0] = shell_exec("uuidgen -r");
+            $output[0] = shell_exec($cmd);
         }
 
         if (!empty($output)) {
             echo "<h3>Generated UUIDs:</h3>";
-            echo "<ul>";
-            foreach ($output as $uuid) {
-                echo "<li>$uuid</li>";
+            echo "<div>";
+            foreach ($output as $index => $uuid) {
+                echo "<div id='uuid$index'>$uuid</div>";
+                echo "<button onclick='copyText(\"uuid$index\")'>Copy</button><br>";
             }
-            echo "</ul>";
+            echo "</div>";
         }
     }
     ?>
