@@ -11,7 +11,7 @@ Link: http://eecslab-23.case.edu/~fyh5/portfolio/
 - <b>Pokemon Type Filter</b>: web service that uses awk and PHP to find pokemon based on specified types.
     - Relevant files:
         - `find_pokemon_by_type.php`
-- <b>Resource Monitor</b>: displays graphs of CPU usage (us, sy, id, wa) and load average over the past 2 days based on the `top` command using grep, cut, and Chart.js
+- <b>Resource Monitor</b>: displays graphs of CPU usage (us, sy, id, wa) and load average in 5 minute intervals over the past 2 days based on the `top` command using grep, cut, and Chart.js
     - Relevant files:
         - `resource_monitor.php` - web page
         - `get_top.sh` - script that runs in the background to gather info from `top`, and outputs to a text file
